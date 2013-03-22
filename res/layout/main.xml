@@ -7,40 +7,13 @@
     android:padding="16dp"
     android:background="#EEEEEE" >
     
-    <TextView
-        android:id="@+id/name_text"
-        android:layout_width="wrap_content"
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:textColor="#064E83"
-        android:paddingBottom="8dp"
-        android:textStyle="bold" />
-    
-    <TextView
-        android:id="@+id/permalink_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#6c6c6c" /> 
-        
-    
-    <TextView 
-        android:id="@+id/overview_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#6c6c6c" />
-    
-    <TextView
-        android:id="@+id/img_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#6c6c6c" />
-    
-    <TextView
-        android:id="@+id/likes_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#6c6c6c" />
-    
+        android:layout_weight="1" />
+
     
     
     

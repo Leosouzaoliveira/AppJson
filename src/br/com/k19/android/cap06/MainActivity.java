@@ -1,12 +1,13 @@
 package br.com.k19.android.cap06;
 
 import java.io.BufferedReader;
-import br.com.k19.android.cap06.R;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,22 +21,28 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.util.Log;
 import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+
 public class MainActivity extends Activity {
 
-    @Override
+   
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.main);
         
-        TextView nameText = (TextView) findViewById(R.id.name_text);
-        TextView permalinkText = (TextView) findViewById(R.id.permalink_text);
-        TextView overviewText = (TextView) findViewById(R.id.overview_text);
-        TextView imgText = (TextView) findViewById(R.id.img_text);
+        ListView listname = (ListView) findViewById(R.id.list);
+        
+        //Criando a array list que vai receber o resultado do json 
+        ArrayList<String> myList = new ArrayList<String>();
         
         ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -43,29 +50,22 @@ public class MainActivity extends Activity {
         String response = makeRequest("http://api.crunchbase.com/v/1/search.js?query=sony&api_key=xkbgxdv3ayxggp2m54ba65u7");
         
         try{
-        	
+        
         JSONObject json = new JSONObject(response);
         JSONArray jsonA = json.getJSONArray(("results"));
         
         for(int i = 0; i < jsonA.length(); i++){
-        	JSONObject name = jsonA.getJSONObject(i);
-        	//JSONObject permalink = jsonA.getJSONObject(i);
-        	//JSONObject overview = jsonA.getJSONObject(i);
-        	//JSONObject img = jsonA.getJSONObject(i).getJSONObject("image");
-        	
-       
-        	nameText.setText((CharSequence) name.get("name"));
-        	//permalinkText.setText(getString(R.string.permalink_label,permalink.getString("permalink")));
-        	//overviewText.setText(getString(R.string.overview_label, overview.getString("overview")));
-        	//imgText.setText(img.getString("available_sizes"));
-        }
-        
-        
+        	JSONObject n = jsonA.getJSONObject(i);
+         	myList.add(n.getString("name"));
+        }   
         
         }catch (JSONException e){
         	e.printStackTrace();
         
         }
+        //Fazendo nossa ListView receber a arraylist
+        ArrayAdapter<String> myarrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, myList);
+        listname.setAdapter(myarrayAdapter);
     }
 
 
